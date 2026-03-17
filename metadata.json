@@ -1,0 +1,5 @@
+{
+  "name": "Data Empire",
+  "description": "Billing and management system for Cambium router connected to Data Empire Satellite.",
+  "requestFramePermissions": ["geolocation"]
+}

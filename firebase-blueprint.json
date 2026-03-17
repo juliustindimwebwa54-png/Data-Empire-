@@ -1,0 +1,61 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile and billing status",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth UID" },
+        "phoneNumber": { "type": "string", "description": "User's phone number" },
+        "displayName": { "type": "string", "description": "User's display name" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "role": { "type": "string", "enum": ["admin", "user"], "description": "User role" },
+        "hasUsedFreeTrial": { "type": "boolean", "description": "Whether the user has used their 5-minute free trial" },
+        "balance": { "type": "number", "description": "User's account balance in UGX" },
+        "simProvider": { "type": "string", "enum": ["airtel", "mtn"], "description": "The SIM provider for the user's phone number" }
+      },
+      "required": ["uid", "phoneNumber", "role"]
+    },
+    "Plan": {
+      "title": "Data Plan",
+      "description": "Available data plans",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "price": { "type": "number" },
+        "durationHours": { "type": "number" },
+        "description": { "type": "string" },
+        "type": { "type": "string", "enum": ["standard", "special", "free"] }
+      },
+      "required": ["id", "name", "price", "durationHours"]
+    },
+    "Subscription": {
+      "title": "Subscription",
+      "description": "Active user data subscriptions",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "planId": { "type": "string" },
+        "startTime": { "type": "string", "format": "date-time" },
+        "endTime": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["active", "expired"] }
+      },
+      "required": ["userId", "planId", "startTime", "endTime", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile documents"
+    },
+    "/subscriptions/{subId}": {
+      "schema": "Subscription",
+      "description": "Active and past subscriptions"
+    },
+    "/plans/{planId}": {
+      "schema": "Plan",
+      "description": "Available data plans"
+    }
+  }
+}
